@@ -18,7 +18,7 @@ public class Main {
         // We could pass the input object to the builder,
         // but that would increase the coupling
         // This way, we can build a simulation without user input
-        SimulationBuilder builder = new SimulationBuilder()
+        TuiSimulationBuilder builder = new TuiSimulationBuilder()
                 .rows(input.rows())
                 .cols(input.cols());
 

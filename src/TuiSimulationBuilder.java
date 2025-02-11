@@ -1,8 +1,11 @@
 import simulation.*;
+import ui.AbstractGuiFactory;
+import ui.LegacyGuiFactory;
+import ui.ModernGuiFactory;
 
 import java.util.*;
 
-public class SimulationBuilder {
+public class TuiSimulationBuilder {
     private int rows;
     private int cols;
     private boolean showVisuals;
@@ -10,32 +13,32 @@ public class SimulationBuilder {
     private Strategy strategy;
     private boolean usingAllStrategies;
 
-    public SimulationBuilder rows(int rows) {
+    public TuiSimulationBuilder rows(int rows) {
         this.rows = rows;
         return this;
     }
 
-    public SimulationBuilder cols(int cols) {
+    public TuiSimulationBuilder cols(int cols) {
         this.cols = cols;
         return this;
     }
 
-    public SimulationBuilder showVisuals() {
+    public TuiSimulationBuilder showVisuals() {
         this.showVisuals = true;
         return this;
     }
 
-    public SimulationBuilder forLegacyTerminal() {
+    public TuiSimulationBuilder forLegacyTerminal() {
         this.forLegacyTerminal = true;
         return this;
     }
 
-    public SimulationBuilder useBoardingStrategy(Strategy strategy) {
+    public TuiSimulationBuilder useBoardingStrategy(Strategy strategy) {
         this.strategy = strategy;
         return this;
     }
 
-    public SimulationBuilder useAllStrategies() {
+    public TuiSimulationBuilder useAllStrategies() {
         this.usingAllStrategies = true;
         return this;
     }
@@ -45,25 +48,23 @@ public class SimulationBuilder {
             throw new IllegalArgumentException("Cannot specify terminal type with visuals hidden");
         }
 
-        if (usingAllStrategies ^ strategy != null) {
-            throw new IllegalArgumentException("Exactly one strategy must be specified");
+        boolean usingOneStrategy = strategy != null;
+        if (usingAllStrategies == usingOneStrategy) {
+            throw new IllegalArgumentException("One xor all strategies must be used");
         }
 
         Optional<AbstractGuiFactory> guiFactory = Optional.empty();
         if (showVisuals) {
-            guiFactory = forLegacyTerminal ? Optional.of(new LegacyGuiFactory()) : Optional.of(new ModernGuiFactory());
+            guiFactory = Optional.of(forLegacyTerminal ? new LegacyGuiFactory() : new ModernGuiFactory());
         }
 
-        @SuppressWarnings("DataFlowIssue") // Cannot be null, asserted in XOR
         List<Strategy> strategies = usingAllStrategies ?
-                Arrays.asList(
+                List.of(
                         new FrontToBackStrategy(),
                         new BackToFrontStrategy(),
                         new RandomStrategy()
                 )
                 : Collections.singletonList(strategy);
-
-        Optional<Strategy> maybeStrategy = usingAllStrategies ? Optional.empty() : Optional.of(strategy);
 
         return new Simulation(
                 rows,

@@ -1,5 +1,7 @@
 package simulation;
 
+import ui.AbstractGuiFactory;
+
 import java.util.List;
 import java.util.Optional;
 
