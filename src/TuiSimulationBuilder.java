@@ -1,5 +1,5 @@
 import simulation.*;
-import ui.AbstractGuiFactory;
+import ui.GuiFactory;
 import ui.LegacyGuiFactory;
 import ui.ModernGuiFactory;
 

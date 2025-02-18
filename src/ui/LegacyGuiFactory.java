@@ -1,4 +1,5 @@
-package ui;
+/*package ui;
 
-public class LegacyGuiFactory implements AbstractGuiFactory {
+public class LegacyGuiFactory implements GuiFactory {
 }
+*/

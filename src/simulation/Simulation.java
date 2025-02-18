@@ -1,6 +1,6 @@
 package simulation;
 
-import ui.AbstractGuiFactory;
+import ui.GuiFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ public class Simulation {
      * @param strategies List of boarding strategies to be executed
      * @param guiFactory If empty, the simulation is run with no visuals
      */
-    public Simulation(int rows, int cols, List<Strategy> strategies, Optional<AbstractGuiFactory> guiFactory) {
+    public Simulation(int rows, int cols, List<Strategy> strategies, Optional<GuiFactory> guiFactory) {
     }
 
     public SimulationResults run() {
