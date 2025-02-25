@@ -3,7 +3,7 @@ import simulation.*;
 import java.util.Optional;
 import java.util.Scanner;
 
-record UserInput(
+record  UserInput(
         int rows,
         int cols,
         boolean showVisuals,
