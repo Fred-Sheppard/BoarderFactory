@@ -1,59 +1,25 @@
 package ui;
 
+import simulation.Seat;
+
 public class LegacySeatGui implements SeatGui {
-    private int row;
-    private int col;
-    private boolean occupied;
-    
-    public LegacySeatGui() {
-        this.occupied = false;
-    }
-    
     @Override
-    public void paint() {
-        if (occupied) {
-            System.out.print("[X]"); // Occupied seat
+    public void paint(Seat seat) {
+        // Calculate position with spacing for readability
+        int yPosition = seat.row() + 5;
+        int xPosition;
+        
+        // Add a gap in the middle for the aisle
+        if (seat.col() < 3) {
+            xPosition = seat.col() * 5 + 5;  // so its 5 10 15 out 
         } else {
-            switch(col) {
-                case 0:
-                case 5:
-                    System.out.print("[□]"); // Window seat
-                    break;
-                case 1:
-                case 4:
-                    System.out.print("[○]"); // Middle seat
-                    break;
-                case 2:
-                case 3:
-                    System.out.print("[△]"); // Aisle seat
-                    break;
-            }
+            xPosition = (seat.col() * 5) + 10;  // so its 20 25 30 out
         }
-    }
-    
-    @Override
-    public void setCoordinates(int row, int col) {
-        this.row = row;
-        this.col = col;
-    }
-    
-    @Override
-    public int getRow() {
-        return row;
-    }
-    
-    @Override
-    public int getCol() {
-        return col;
-    }
-    
-    @Override
-    public void setOccupied(boolean occupied) {
-        this.occupied = occupied;
-    }
-    
-    @Override
-    public boolean isOccupied() {
-        return occupied;
+        
+        // Move cursor to position
+        System.out.print("\033[" + yPosition + ";" + xPosition + "H");
+        
+        // Simple ASCII representation for seats
+        System.out.print("[]");  // Box-like seat
     }
 }

@@ -1,5 +1,5 @@
 package ui;
 
 public interface AisleGui {
-    void paint();  // Interface for painting the aisle
+    void paint();  // Simple interface for painting the aisle
 }

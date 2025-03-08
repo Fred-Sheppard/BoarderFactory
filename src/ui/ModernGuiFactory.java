@@ -7,12 +7,12 @@ public class ModernGuiFactory implements AbstractGuiFactory {
     }
     
     @Override
-    public AisleGui createAisleGui() {
-        return new ModernAisleGui();
+    public SeatGui createSeatGui() {
+        return new ModernSeatGui();
     }
     
     @Override
-    public SeatGui createSeatGui() {
-        return new ModernSeatGui();
+    public AisleGui createAisleGui() {
+        return new ModernAisleGui();
     }
 }

@@ -1,24 +1,32 @@
 package ui;
 
+import simulation.Seat;
+
 public class ModernSeatGui implements SeatGui {
     // ANSI color code constants
     private static final String LIGHT_BLUE = "\u001B[94m";   // Window seat color
     private static final String LIGHT_GREEN = "\u001B[92m";  // Middle seat color
-    private static final String LIGHT_RED = "\u001B[91m";    // Outside seat color
-    private static final String RESET = "\u001B[0m";         // Resets color back to default
-    
-    private int row;
-    private int col;
-    private boolean occupied;
-    
-    public ModernSeatGui() {
-        this.occupied = false;
-    }
+    private static final String LIGHT_RED = "\u001B[91m";    // Aisle seat color
+    private static final String RESET = "\u001B[0m";         // Resets formatting
     
     @Override
-    public void paint() {
+    public void paint(Seat seat) {
+        // Calculate position with spacing for readability
+        int yPosition = seat.row() + 5;
+        int xPosition;
+        
+        // Add a gap in the middle for the aisle
+        if (seat.col() < 3) {
+            xPosition = seat.col() * 5 + 5;  // so its 5 10 15 out 
+        } else {
+            xPosition = (seat.col() * 5) + 10;  // so its 20 25 30 out
+        }
+        
+        // Move cursor to position
+        System.out.print("\033[" + yPosition + ";" + xPosition + "H");
+        
         // Choose color based on column position
-        switch(col) {
+        switch(seat.col()) {
             case 0:
             case 5:
                 System.out.print(LIGHT_BLUE);
@@ -32,34 +40,7 @@ public class ModernSeatGui implements SeatGui {
                 System.out.print(LIGHT_RED);
                 break;
         }
-        // Print P if occupied, S if empty
-        System.out.print(occupied ? "P" : "S");
+        System.out.print("S");  // Display Seat
         System.out.print(RESET);
-    }
-    
-    @Override
-    public void setCoordinates(int row, int col) {
-        this.row = row;
-        this.col = col;
-    }
-    
-    @Override
-    public int getRow() {
-        return row;
-    }
-    
-    @Override
-    public int getCol() {
-        return col;
-    }
-    
-    @Override
-    public void setOccupied(boolean occupied) {
-        this.occupied = occupied;
-    }
-    
-    @Override
-    public boolean isOccupied() {
-        return occupied;
     }
 }
