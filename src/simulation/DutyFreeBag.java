@@ -1,14 +1,15 @@
 package simulation;
 
-// Concrete Decorator for Under Bag
+// Concrete Decorator for Duty Free Bag
 class DutyFreeBag extends PersonDecorator {
+    final private int DUTY_FREE_BAG = 2;
     public DutyFreeBag(Person person) {
         super(person);
     }
 
     @Override
     public int getTime() {
-        return super.getTime() + 2;
+        return super.getTime() + DUTY_FREE_BAG;
     }
 
 }

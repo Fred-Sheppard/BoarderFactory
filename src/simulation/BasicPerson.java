@@ -2,16 +2,19 @@ package simulation;
 
 // Concrete implementation of Person
 class BasicPerson implements Person {
+    private static final int DEFAULT_TIME = 5; // Default processing time for a person
     private int time;
+
     public BasicPerson(int time) {
         this.time = time;
-    } // to maybe add variance to different type of person i.e. elderly
-    public BasicPerson() {
-        this(5);
     }
+
+    public BasicPerson() {
+        this(DEFAULT_TIME);
+    }
+
     @Override
     public int getTime() {
         return time;
     }
-
 }
