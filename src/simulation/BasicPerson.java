@@ -4,17 +4,48 @@ package simulation;
 class BasicPerson implements Person {
     private static final int DEFAULT_TIME = 5; // Default processing time for a person
     private int time;
-
-    public BasicPerson(int time) {
+    private boolean stowingBags = false;
+    private boolean seated = false;
+    private int x;
+    private Seat seat;
+    public BasicPerson(Seat seat, int time) {
+        this.x = 0;
         this.time = time;
+        this.seat = seat;
     }
-
-    public BasicPerson() {
-        this(DEFAULT_TIME);
+    public BasicPerson(Seat seat) {
+        this(seat, DEFAULT_TIME);
     }
 
     @Override
     public int getTime() {
         return time;
+    }
+
+    @Override
+    public boolean isStowingBags() {
+        return stowingBags;
+    }
+
+    @Override
+    public void startStowingBags(){
+        stowingBags = true;
+    }
+
+    public boolean isSeated() {
+        return seated;
+    }
+
+    @Override
+    public void setSeated(boolean seated) {
+        this.seated = seated;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
     }
 }

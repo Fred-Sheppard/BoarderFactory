@@ -11,5 +11,4 @@ class UnderBag extends PersonDecorator {
     public int getTime() {
         return super.getTime() + UNDER_BAG_TIME;
     }
-
 }

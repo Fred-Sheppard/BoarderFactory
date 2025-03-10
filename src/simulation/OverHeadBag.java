@@ -11,5 +11,4 @@ class OverHeadBag extends PersonDecorator {
     public int getTime() {
         return super.getTime() + OVER_HEAD_BAG;
     }
-
 }
