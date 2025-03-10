@@ -3,9 +3,9 @@ import java.util.*;
 import java.util.Comparator;
 
 public class ColumnStrategy implements Strategy {
-    public void sortPassengers(ArrayList<Passenger> passengers) {
+    public void sortPassengers(ArrayList<Person> passengers) {
 
-        passengers.sort(Comparator.comparingInt((Passenger p) -> p.getSeat().col())
+        passengers.sort(Comparator.comparingInt((Person p) -> p.getSeat().col())
                 .thenComparingInt(p -> p.getSeat().row()).reversed());
     }
 

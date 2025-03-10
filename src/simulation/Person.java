@@ -9,5 +9,6 @@ interface Person {
     void setSeated(boolean seated);
     int getX();
     void setX(int x);
+    Seat getSeat();
 }
 

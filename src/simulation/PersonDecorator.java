@@ -42,4 +42,9 @@ abstract class PersonDecorator implements Person {
     public void setSeated(boolean seated) {
         person.setSeated(seated);
     }
+
+    @Override
+    public Seat getSeat() {
+        return person.getSeat();
+    }
 }

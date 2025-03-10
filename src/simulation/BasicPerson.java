@@ -31,7 +31,7 @@ class BasicPerson implements Person {
     public void startStowingBags(){
         stowingBags = true;
     }
-
+    @Override
     public boolean isSeated() {
         return seated;
     }
@@ -40,12 +40,16 @@ class BasicPerson implements Person {
     public void setSeated(boolean seated) {
         this.seated = seated;
     }
-
+    @Override
     public int getX() {
         return x;
     }
-
+    @Override
     public void setX(int x) {
         this.x = x;
+    }
+    @Override
+    public Seat getSeat() {
+        return this.seat;
     }
 }
