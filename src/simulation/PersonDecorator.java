@@ -3,7 +3,6 @@ package simulation;
 // Decorator class
 abstract class PersonDecorator implements Person {
     protected Person person;
-
     public PersonDecorator(Person person) {
         this.person = person;
     }
@@ -46,5 +45,15 @@ abstract class PersonDecorator implements Person {
     @Override
     public Seat getSeat() {
         return person.getSeat();
+    }
+
+    @Override
+    public int getCounter() {
+        return person.getCounter();
+    }
+
+    @Override
+    public void decrementCounter() {
+        person.decrementCounter();
     }
 }

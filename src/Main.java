@@ -59,7 +59,6 @@ public class Main {
                 default -> throw new IllegalStateException("Unexpected value: " + stratId);
             });
         }
-
-        return new UserInput(/* ... */);
+        return new UserInput(rows, cols, true, true, strategy);
     }
 }

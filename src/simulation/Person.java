@@ -10,5 +10,6 @@ interface Person {
     int getX();
     void setX(int x);
     Seat getSeat();
+    int getCounter();
+    void decrementCounter();
 }
-

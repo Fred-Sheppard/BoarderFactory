@@ -8,10 +8,13 @@ class BasicPerson implements Person {
     private boolean seated = false;
     private int x;
     private Seat seat;
+    private int counter;
+
     public BasicPerson(Seat seat, int time) {
         this.x = 0;
         this.time = time;
         this.seat = seat;
+        this.counter = time;
     }
     public BasicPerson(Seat seat) {
         this(seat, DEFAULT_TIME);
@@ -51,5 +54,17 @@ class BasicPerson implements Person {
     @Override
     public Seat getSeat() {
         return this.seat;
+    }
+
+    @Override
+    public int getCounter() {
+        return counter;
+    }
+
+    @Override
+    public void decrementCounter() {
+        if (counter > 0) {
+            counter--;
+        }
     }
 }

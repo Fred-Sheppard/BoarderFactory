@@ -22,11 +22,13 @@ public class Simulation {
     private List<Strategy> strategies;
     private Optional<AbstractGuiFactory> guiFactory;
     private ArrayList<Person> cage = new ArrayList<>();
+    private Person[] aisle;
     public Simulation(int rows, int cols, List<Strategy> strategies, Optional<AbstractGuiFactory> guiFactory) {
         this.rows = rows;
         this.cols = cols;
         this.strategies = strategies;
         this.guiFactory = guiFactory;
+        aisle = new Person[rows];
     }
     private void setup(Strategy strategy) {
         for (int i=0; i < rows; i++) {
@@ -47,23 +49,38 @@ public class Simulation {
         }
         strategy.sortPassengers(cage);
     }
-
+    private void movePerson(Person p, int index) {
+        if (aisle[index] != null) {
+            throw new RuntimeException("Someone is already in the " + index + " position");
+        }
+        aisle[index] = p;
+    }
     private SimulationResults mainLoop(){
-        Person[] aisle = new Person[cols];
         for (int i = 0; i < aisle.length; i++) {
             if (aisle[i] == null) {
+                System.out.println("NO PASSENGER");
                 continue;
             }
-            if (aisle[i])
+            if (aisle[i].getX() == aisle[i].getSeat().row()) {
+                if (aisle[i].isStowingBags() && aisle[i].getCounter() == 0) {
+                    aisle[i] = null;
+                    System.out.println("Sitting down");
+                } else if (aisle[i].isStowingBags()) {
+                    aisle[i].decrementCounter();
+                } else {
+                    aisle[i].startStowingBags();
+                }
+            }
+            aisle[i].setX(aisle[i].getX() + 1);
+            movePerson(aisle[i], aisle[i].getX() + 1);
         }
-
-
+        return new SimulationResults();
     }
 
     public SimulationResults run() {
         for (Strategy strategy : strategies) {
             setup(strategy);
-            // main loop here
+            mainLoop();
             // clean up here
         }
        return new SimulationResults();
