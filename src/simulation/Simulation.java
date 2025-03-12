@@ -1,35 +1,30 @@
 package simulation;
 
 import ui.AbstractGuiFactory;
-import simulation.BasicPerson;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 // Note: Simulation shouldn't have any knowledge of the UI being used
 // That means no console logging or reading inputs
 public class Simulation {
+    private final int rows;
+    private final int cols;
+    private final List<Strategy> strategies;
+    private final ArrayList<Person> cage = new ArrayList<>();
+    private final Person[] aisle;
+
     /**
      * @param rows       The number of rows of seats
      * @param cols       The number of columns in each row
      * @param strategies List of boarding strategies to be executed
      * @param guiFactory If empty, the simulation is run with no visuals
      */
-    private final int rows;
-    private final int cols;
-    private final List<Strategy> strategies;
-    private final Optional<AbstractGuiFactory> guiFactory;
-    private final ArrayList<Person> cage = new ArrayList<>();
-    private final Person[] aisle;
-
     public Simulation(int rows, int cols, List<Strategy> strategies, Optional<AbstractGuiFactory> guiFactory) {
         this.rows = rows;
         this.cols = cols;
         this.strategies = strategies;
-        this.guiFactory = guiFactory;
         aisle = new Person[rows];
+        // TODO create GUI painters
     }
 
     private void setup(Strategy strategy) {
@@ -61,34 +56,56 @@ public class Simulation {
         aisle[index] = p;
     }
 
-    private SimulationResults mainLoop() {
-        for (int i = 0; i < aisle.length; i++) {
-            if (aisle[i] == null) {
-                System.out.println("NO PASSENGER");
-                continue;
-            }
-            if (aisle[i].getX() == aisle[i].getSeat().row()) {
-                if (aisle[i].isStowingBags() && aisle[i].getCounter() == 0) {
-                    aisle[i] = null;
-                    System.out.println("Sitting down");
-                } else if (aisle[i].isStowingBags()) {
-                    aisle[i].decrementCounter();
-                } else {
-                    aisle[i].startStowingBags();
+    private int mainLoop() {
+        int seatedPassengers = 0;
+        int tick = 0;
+        int passengers = cage.size();
+        while (seatedPassengers < passengers) {
+            for (int i = 0; i < aisle.length; i++) {
+                if (aisle[i] == null) {
+                    continue;
                 }
+                Person p = aisle[i];
+                if (isPassengerAtSeat(p)) {
+                    if (isPassengerReadyToSitDown(p)) {
+                        aisle[i] = null;
+                        seatedPassengers++;
+                        p.setSeated(true);
+                    } else if (p.isStowingBags()) {
+                        p.decrementCounter();
+                    } else {
+                        p.startStowingBags();
+                    }
+                } else {
+                    p.setX(p.getX() + 1);
+                    movePerson(p, p.getX() + 1);
+                }
+
+                paintGui();
             }
-            aisle[i].setX(aisle[i].getX() + 1);
-            movePerson(aisle[i], aisle[i].getX() + 1);
         }
-        return new SimulationResults();
+        return tick;
+    }
+
+    private void paintGui() {
+        // TODO use Frizzle's code
+    }
+
+    private boolean isPassengerAtSeat(Person p) {
+        return p.getX() == p.getSeat().row();
+    }
+
+    private boolean isPassengerReadyToSitDown(Person p) {
+        return p.isStowingBags() && p.getCounter() == 0;
     }
 
     public SimulationResults run() {
+        HashMap<Strategy, Integer> results = new HashMap<>();
         for (Strategy strategy : strategies) {
             setup(strategy);
-            mainLoop();
-            // clean up here
+            int timeTaken = mainLoop();
+            results.put(strategy, timeTaken);
         }
-        return new SimulationResults();
+        return new SimulationResults(results);
     }
 }
