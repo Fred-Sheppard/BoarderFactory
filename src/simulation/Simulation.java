@@ -17,12 +17,13 @@ public class Simulation {
      * @param strategies List of boarding strategies to be executed
      * @param guiFactory If empty, the simulation is run with no visuals
      */
-    private int rows;
-    private int cols;
-    private List<Strategy> strategies;
-    private Optional<AbstractGuiFactory> guiFactory;
-    private ArrayList<Person> cage = new ArrayList<>();
-    private Person[] aisle;
+    private final int rows;
+    private final int cols;
+    private final List<Strategy> strategies;
+    private final Optional<AbstractGuiFactory> guiFactory;
+    private final ArrayList<Person> cage = new ArrayList<>();
+    private final Person[] aisle;
+
     public Simulation(int rows, int cols, List<Strategy> strategies, Optional<AbstractGuiFactory> guiFactory) {
         this.rows = rows;
         this.cols = cols;
@@ -30,18 +31,21 @@ public class Simulation {
         this.guiFactory = guiFactory;
         aisle = new Person[rows];
     }
+
     private void setup(Strategy strategy) {
-        for (int i=0; i < rows; i++) {
-            for (int j=0; j < cols; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 Seat seat = new Seat(i, j);
                 Person p = new BasicPerson(seat);
                 Random random = new Random();
                 int r1 = random.nextInt(2), r2 = random.nextInt(2), r3 = random.nextInt(2);
-                if (r1 == 1){
+                if (r1 == 1) {
                     p = new DutyFreeBag(p);
-                }if (r2 == 1){
+                }
+                if (r2 == 1) {
                     p = new OverHeadBag(p);
-                }if (r3 == 1){
+                }
+                if (r3 == 1) {
                     p = new UnderBag(p);
                 }
                 cage.add(p);
@@ -49,13 +53,15 @@ public class Simulation {
         }
         strategy.sortPassengers(cage);
     }
+
     private void movePerson(Person p, int index) {
         if (aisle[index] != null) {
             throw new RuntimeException("Someone is already in the " + index + " position");
         }
         aisle[index] = p;
     }
-    private SimulationResults mainLoop(){
+
+    private SimulationResults mainLoop() {
         for (int i = 0; i < aisle.length; i++) {
             if (aisle[i] == null) {
                 System.out.println("NO PASSENGER");
@@ -83,6 +89,6 @@ public class Simulation {
             mainLoop();
             // clean up here
         }
-       return new SimulationResults();
+        return new SimulationResults();
     }
 }
