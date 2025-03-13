@@ -60,8 +60,38 @@ public class Simulation {
         int seatedPassengers = 0;
         int tick = 0;
         int passengers = cage.size();
+
         while (seatedPassengers < passengers) {
+            System.out.println("\n=== Tick " + tick + " ===");
+            
+            // Print cage status
+            System.out.println("Cage (" + cage.size() + " people):");
+            for (Person p : cage) {
+                System.out.println("  - Person for seat " + p.getSeat());
+            }
+            
+            // Print aisle status
+            System.out.println("\nAisle:");
             for (int i = 0; i < aisle.length; i++) {
+                if (aisle[i] != null) {
+                    Person p = aisle[i];
+                    String status = p.isStowingBags() ? " (stowing bags, counter: " + p.getCounter() + ")" : 
+                                  p.isSeated() ? " (seated)" : " (walking)";
+                    System.out.println("  Position " + i + ": Person for seat " + p.getSeat() + status);
+                } else {
+                    System.out.println("  Position " + i + ": empty");
+                }
+            }
+
+            // Try to move a person from cage to aisle if first position is empty
+            if (!cage.isEmpty() && aisle[0] == null) {
+                Person p = cage.remove(0);
+                p.setX(0);
+                aisle[0] = p;
+                System.out.println("\nMoved new person to aisle position 0 (heading to seat " + p.getSeat() + ")");
+            }
+
+            for (int i = aisle.length - 1; i >= 0; i--) {
                 if (aisle[i] == null) {
                     continue;
                 }
@@ -71,17 +101,31 @@ public class Simulation {
                         aisle[i] = null;
                         seatedPassengers++;
                         p.setSeated(true);
+                        System.out.println("Person at position " + i + " sat down at their seat " + p.getSeat());
                     } else if (p.isStowingBags()) {
+                        int oldCounter = p.getCounter();
                         p.decrementCounter();
+                        System.out.println("Person at position " + i + " is stowing bags (counter decreased from " + oldCounter + " to " + p.getCounter() + ")");
                     } else {
                         p.startStowingBags();
+                        System.out.println("Person at position " + i + " started stowing bags (counter initialized to " + p.getCounter() + ")");
                     }
-                } else {
+                } else if (i < aisle.length - 1 && aisle[i + 1] == null) {
+                    aisle[i + 1] = p;
+                    aisle[i] = null;
                     p.setX(p.getX() + 1);
-                    movePerson(p, p.getX() + 1);
+                    System.out.println("Person moved from position " + i + " to " + (i + 1));
                 }
-
-                paintGui();
+            }
+            
+            tick++;
+            paintGui();
+            
+            // Add a small delay to make it easier to follow
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
         return tick;
