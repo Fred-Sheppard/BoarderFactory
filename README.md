@@ -1,6 +1,7 @@
 # Boarder Factory
 
 ![Airplane Boarding Simulation](images/random-sim.png)
+
 ![Airplane Boarding Simulation Results](images/random-results.png)
 
 A sophisticated airplane boarding simulator that implements and compares different boarding strategies to optimize passenger loading time.
