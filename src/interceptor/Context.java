@@ -2,10 +2,6 @@ package interceptor;
 
 import java.time.LocalDateTime;
 
-/**
- * Context class that holds information about the intercepted method call.
- * This includes method name, parameters, return value, and timing information.
- */
 public class Context {
     private final String methodName;
     private final Object[] parameters;

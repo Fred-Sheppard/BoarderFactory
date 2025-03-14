@@ -3,10 +3,6 @@ package interceptor;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-/**
- * Concrete implementation of the Interceptor interface that provides logging functionality.
- * This interceptor logs method entry and exit.
- */
 public class LoggingInterceptor implements Interceptor {
     private static final Logger logger = Logger.getLogger(LoggingInterceptor.class.getName());
 
