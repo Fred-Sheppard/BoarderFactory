@@ -2,53 +2,47 @@ package ui;
 
 import simulation.Seat;
 
-public class ModernSeatGui implements SeatGui {
-    // ANSI color code constants
-    private static final String LIGHT_BLUE = "\u001B[94m";   // Window seat color
-    private static final String LIGHT_GREEN = "\u001B[92m";  // Middle seat color
-    private static final String LIGHT_RED = "\u001B[91m";    // Aisle seat color
-    private static final String RESET = "\u001B[0m";         // Resets formatting
-    private static final int X_OFFSET = 5;
-    private static final int Y_OFFSET = 1;
+import static ui.Util.*;
 
-    private void paint(Seat seat, int seatsPerRow, boolean isOccupied) {
-        // Calculate position with spacing for readability
-        int xPosition = seat.row() + X_OFFSET;
-        int yPosition = seat.col() + Y_OFFSET;
+public class ModernSeatGui implements SeatGui {
+    private final int xOffset;
+    private final int yOffset;
+    private final int aisleY;
+
+
+    public ModernSeatGui(int xOffset, int yOffset, int seatsPerColumn) {
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+        this.aisleY = seatsPerColumn / 2 + yOffset;
+    }
+
+    private void paint(Seat seat, boolean isOccupied) {
+        int x = seat.row() + xOffset;
+        int y = seat.col() + yOffset;
 
         // Add a gap in the middle for the aisle
-        if (seat.col() >= seatsPerRow / 2) {
-            yPosition += 1;
+        if (y >= aisleY) {
+            y += 1;
         }
 
-        // Move cursor to position
-        System.out.print("\033[" + yPosition + ";" + xPosition + "H");
+        moveCursor(x, y);
 
-        // Choose color based on column position
-        switch (seat.col()) {
-            case 0:
-            case 5:
-                System.out.print(LIGHT_BLUE);
-                break;
-            case 1:
-            case 4:
-                System.out.print(LIGHT_GREEN);
-                break;
-            case 2:
-            case 3:
-                System.out.print(LIGHT_RED);
-                break;
-        }
-        System.out.print(isOccupied ? "■" : "□");
-        System.out.print(RESET);
+        // TODO
+        String color = switch (seat.col()) {
+            case 0, 5 -> LIGHT_BLUE;
+            case 1, 4 -> LIGHT_GREEN;
+            case 2, 3 -> LIGHT_RED;
+            default -> throw new IllegalStateException("Unexpected value: " + seat.col());
+        };
+        print(color, isOccupied ? "■" : "□");
     }
 
     @Override
     public void paintFull(Seat seat, int seatsPerRow) {
-        paint(seat, seatsPerRow, true);
+        paint(seat, true);
     }
 
     public void paintEmpty(Seat seat, int seatsPerRow) {
-        paint(seat, seatsPerRow, false);
+        paint(seat, false);
     }
 }

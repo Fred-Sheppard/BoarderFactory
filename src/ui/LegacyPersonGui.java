@@ -2,19 +2,22 @@ package ui;
 
 import simulation.Person;
 
+import static ui.Util.*;
 
 public class LegacyPersonGui implements PersonGui {
-    // Simple ASCII version without colors
-    private static final int AISE_Y_VALUE = 3;
+    private final int xOffset;
+    private final int aisleY;
+
+    public LegacyPersonGui(int xOffset, int yOffset, int cols) {
+        this.xOffset = xOffset;
+        aisleY = cols / 2 + yOffset;
+    }
 
     @Override
     public void paint(Person passenger) {
-        // Move cursor to passenger's position with basic offset
-        int row = passenger.getX();
-
-        System.out.print("\033[" + row + ";" + AISE_Y_VALUE + "H");
-
-        // Display a simple "P" for passenger
-        System.out.print("P");
+        int x = passenger.getX() + xOffset;
+        moveCursor(x, aisleY);
+        String icon = passenger.isStowingBags() ? passenger.getCounter() + "" : "■";
+        print(icon);
     }
 }

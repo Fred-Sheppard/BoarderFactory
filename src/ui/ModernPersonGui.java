@@ -1,45 +1,32 @@
 package ui;
 
 import simulation.Person;
-import simulation.Seat;
+
+import static ui.Util.*;
 
 public class ModernPersonGui implements PersonGui {
-    private static final String LIGHT_BLUE = "\u001B[94m";   // Window area
-    private static final String LIGHT_GREEN = "\u001B[92m";  // Middle area
-    private static final String LIGHT_RED = "\u001B[91m";    // Aisle area
-    private static final String RESET = "\u001B[0m";
-    private static final int X_OFFSET = 5;
-    private static final int AISE_Y_VALUE = 4;
+    private final int xOffset;
+    private final int aisleY;
+
+    public ModernPersonGui(int xOffset, int yOffset, int cols) {
+        this.xOffset = xOffset;
+        aisleY = cols / 2 + yOffset;
+    }
 
     @Override
     public void paint(Person passenger) {
         // TODO spacing
-        // TODO boxes
-        // TODO display person when they're seated
-        Seat seat = passenger.getSeat();
+        int x = passenger.getX() + xOffset;
+        Util.moveCursor(x, aisleY);
 
-        // Move cursor to passenger's position with basic offset
-        int row = passenger.getX() + X_OFFSET;
-
-        System.out.print("\033[" + AISE_Y_VALUE + ";" + row + "H");
-
-        // Choose color based on seat column
-        switch (seat.col()) {
-            case 0:
-            case 5:
-                System.out.print(LIGHT_BLUE);
-                break;
-            case 1:
-            case 4:
-                System.out.print(LIGHT_GREEN);
-                break;
-            case 2:
-            case 3:
-                System.out.print(LIGHT_RED);
-                break;
-        }
-        String icon = passenger.getCounter() == 0 ? "■" : passenger.getCounter() + "";
-        System.out.print(icon);
-        System.out.print(RESET);
+        // TODO more than 3 columns
+        String color = switch (passenger.getSeat().col()) {
+            case 0, 5 -> LIGHT_BLUE;
+            case 1, 4 -> LIGHT_GREEN;
+            case 2, 3 -> LIGHT_RED;
+            default -> throw new IllegalStateException("Unexpected value: " + passenger.getSeat().col());
+        };
+        String icon = passenger.isStowingBags() ? passenger.getCounter() + "" : "■";
+        Util.print(color, icon);
     }
 }

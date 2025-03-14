@@ -1,7 +1,7 @@
 package ui;
 
 public interface AbstractGuiFactory {
-    PersonGui createPersonGui();
-    AisleGui createAisleGui();
-    SeatGui createSeatGui();
+    PersonGui createPersonGui(int cols);
+    AisleGui createAisleGui(int rows, int columns);
+    SeatGui createSeatGui(int seatsPerColumn);
 } 

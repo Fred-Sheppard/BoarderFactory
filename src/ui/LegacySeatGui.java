@@ -2,28 +2,39 @@ package ui;
 
 import simulation.Seat;
 
+import static ui.Util.*;
+
 public class LegacySeatGui implements SeatGui {
+    private final int xOffset;
+    private final int yOffset;
+    private final int aisleY;
+
+
+    public LegacySeatGui(int xOffset, int yOffset, int seatsPerColumn) {
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+        this.aisleY = seatsPerColumn / 2 + yOffset;
+    }
+
+    private void paint(Seat seat, boolean isOccupied) {
+        int x = seat.row() + xOffset;
+        int y = seat.col() + yOffset;
+
+        // Add a gap in the middle for the aisle
+        if (y >= aisleY) {
+            y += 1;
+        }
+
+        moveCursor(x, y);
+        print(isOccupied ? "■" : "□");
+    }
+
     @Override
     public void paintFull(Seat seat, int seatsPerRow) {
-        // Calculate position with spacing for readability
-        int yPosition = seat.row() + 5;
-        int xPosition;
-        
-        // Add a gap in the middle for the aisle
-        if (seat.col() < 3) {
-            xPosition = seat.col() * 5 + 5;  // so its 5 10 15 out 
-        } else {
-            xPosition = (seat.col() * 5) + 10;  // so its 20 25 30 out
-        }
-        
-        // Move cursor to position
-        System.out.print("\033[" + yPosition + ";" + xPosition + "H");
-        
-        // Simple ASCII representation for seats
-        System.out.print("[]");  // Box-like seat
+        paint(seat, true);
     }
 
     public void paintEmpty(Seat seat, int seatsPerRow) {
-
+        paint(seat, false);
     }
 }
