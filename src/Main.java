@@ -44,7 +44,7 @@ public class Main {
         Simulation simulation = builder.build();
         SimulationResults results = simulation.run();
         System.out.println("\033c");
-        System.out.println(results);
+        System.out.println(results.toString());
     }
 
     static UserInput collectOptions() {
