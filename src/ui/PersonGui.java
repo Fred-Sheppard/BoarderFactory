@@ -1,7 +1,7 @@
 package ui;
 
-import simulation.Passenger;
+import simulation.Person;
 
 public interface PersonGui {
-    void paint(Passenger passenger);
+    void paint(Person passenger);
 }

@@ -4,7 +4,7 @@ import simulation.Seat;
 
 public class LegacySeatGui implements SeatGui {
     @Override
-    public void paint(Seat seat) {
+    public void paintFull(Seat seat, int seatsPerRow) {
         // Calculate position with spacing for readability
         int yPosition = seat.row() + 5;
         int xPosition;
@@ -21,5 +21,9 @@ public class LegacySeatGui implements SeatGui {
         
         // Simple ASCII representation for seats
         System.out.print("[]");  // Box-like seat
+    }
+
+    public void paintEmpty(Seat seat, int seatsPerRow) {
+
     }
 }

@@ -44,6 +44,10 @@ public class TuiSimulationBuilder {
     }
 
     public Simulation build() {
+        if (cols % 2 != 0) {
+            throw new IllegalArgumentException("Must have even number of columns");
+        }
+
         if (!showVisuals && forLegacyTerminal) {
             throw new IllegalArgumentException("Cannot specify terminal type with visuals hidden");
         }
@@ -62,7 +66,8 @@ public class TuiSimulationBuilder {
                 List.of(
                         new FrontToBackStrategy(),
                         new BackToFrontStrategy(),
-                        new RandomStrategy()
+                        new RandomStrategy(),
+                        new ColumnStrategy()
                 )
                 : Collections.singletonList(strategy);
 

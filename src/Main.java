@@ -1,4 +1,6 @@
 import simulation.*;
+import interceptor.Dispatcher;
+import interceptor.LoggingInterceptor;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -13,6 +15,9 @@ record  UserInput(
 
 public class Main {
     public static void main(String[] args) {
+        // Set up logging interceptor
+        Dispatcher.addInterceptor(new LoggingInterceptor());
+
         UserInput input = collectOptions();
 
         // We could pass the input object to the builder,
@@ -38,27 +43,33 @@ public class Main {
 
         Simulation simulation = builder.build();
         SimulationResults results = simulation.run();
+        System.out.println("\033c");
         System.out.println(results);
     }
 
     static UserInput collectOptions() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter number of rows on the plane: ");
-        int rows = scanner.nextInt();
-        System.out.print("Enter number of seats in each row: ");
-        int cols = scanner.nextInt();
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Enter number of rows on the plane: ");
+//        int rows = scanner.nextInt();
+//        System.out.print("Enter number of seats in each row: ");
+//        int cols = scanner.nextInt();
 
-        int stratId = scanner.nextInt();
+//        int stratId = scanner.nextInt();
+        int rows = 30;
+        int cols = 6;
+        int stratId = 3;
 
         Optional<Strategy> strategy = Optional.empty();
-        if (stratId < 3) {
+        if (stratId < 4) {
             strategy = Optional.of(switch (stratId) {
                 case 0 -> new FrontToBackStrategy();
                 case 1 -> new BackToFrontStrategy();
                 case 2 -> new RandomStrategy();
+                case 3 -> new ColumnStrategy();
                 default -> throw new IllegalStateException("Unexpected value: " + stratId);
             });
         }
-        return new UserInput(rows, cols, true, true, strategy);
+        // TODO
+        return new UserInput(rows, cols, true, false, strategy);
     }
 }

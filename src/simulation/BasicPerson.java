@@ -2,20 +2,21 @@ package simulation;
 
 // Concrete implementation of Person
 class BasicPerson implements Person {
-    private static final int DEFAULT_TIME = 5; // Default processing time for a person
-    private int time;
+    private static final int DEFAULT_TIME = 1; // Default processing time for a person
+    private final int time;
     private boolean stowingBags = false;
     private boolean seated = false;
     private int x;
-    private Seat seat;
+    private final Seat seat;
     private int counter;
 
     public BasicPerson(Seat seat, int time) {
         this.x = 0;
         this.time = time;
         this.seat = seat;
-        this.counter = time;
+        this.counter = 0;
     }
+
     public BasicPerson(Seat seat) {
         this(seat, DEFAULT_TIME);
     }
@@ -31,9 +32,10 @@ class BasicPerson implements Person {
     }
 
     @Override
-    public void startStowingBags(){
+    public void startStowingBags() {
         stowingBags = true;
     }
+
     @Override
     public boolean isSeated() {
         return seated;
@@ -43,14 +45,17 @@ class BasicPerson implements Person {
     public void setSeated(boolean seated) {
         this.seated = seated;
     }
+
     @Override
     public int getX() {
         return x;
     }
+
     @Override
     public void setX(int x) {
         this.x = x;
     }
+
     @Override
     public Seat getSeat() {
         return this.seat;
@@ -59,6 +64,14 @@ class BasicPerson implements Person {
     @Override
     public int getCounter() {
         return counter;
+    }
+
+    public int getDefaultCounter() {
+        return DEFAULT_TIME;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
     @Override

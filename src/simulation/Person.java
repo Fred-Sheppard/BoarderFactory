@@ -1,7 +1,7 @@
 package simulation;
 
 // Base interface
-interface Person {
+public interface Person {
     int getTime();
     boolean isStowingBags();
     void startStowingBags();
@@ -11,5 +11,7 @@ interface Person {
     void setX(int x);
     Seat getSeat();
     int getCounter();
+    int getDefaultCounter();
+    void setCounter(int counter);
     void decrementCounter();
 }

@@ -3,6 +3,7 @@ package simulation;
 // Decorator class
 abstract class PersonDecorator implements Person {
     protected Person person;
+
     public PersonDecorator(Person person) {
         this.person = person;
     }
@@ -19,6 +20,9 @@ abstract class PersonDecorator implements Person {
 
     @Override
     public void startStowingBags() {
+        if (person.getCounter() == 0) {
+            person.setCounter(this.getDefaultCounter());
+        }
         person.startStowingBags();
     }
 
@@ -50,6 +54,11 @@ abstract class PersonDecorator implements Person {
     @Override
     public int getCounter() {
         return person.getCounter();
+    }
+
+    @Override
+    public void setCounter(int counter) {
+        person.setCounter(counter);
     }
 
     @Override
