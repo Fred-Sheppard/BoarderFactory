@@ -57,9 +57,9 @@ public class TuiSimulationBuilder {
             throw new IllegalArgumentException("One xor all strategies must be used");
         }
 
-        Optional<AbstractGuiFactory> guiFactory = Optional.empty();
+        AbstractGuiFactory guiFactory = null;
         if (showVisuals) {
-            guiFactory = Optional.of(forLegacyTerminal ? new LegacyGuiFactory() : new ModernGuiFactory());
+            guiFactory = forLegacyTerminal ? new LegacyGuiFactory() : new ModernGuiFactory();
         }
 
         List<Strategy> strategies = usingAllStrategies ?

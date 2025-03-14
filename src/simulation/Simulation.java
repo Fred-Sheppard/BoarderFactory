@@ -17,28 +17,31 @@ public class Simulation {
     private final List<Strategy> strategies;
     private final ArrayList<Person> cage = new ArrayList<>();
     private final Person[] aisle;
-    private final PersonGui personGui;
-    private final AisleGui aisleGui;
-    private final SeatGui seatGui;
+    private PersonGui personGui;
+    private AisleGui aisleGui;
+    private SeatGui seatGui;
     private final ArrayList<Seat> filledSeats = new ArrayList<>();
 
     /**
      * @param rows       The number of rows of seats
      * @param cols       The number of columns in each row
      * @param strategies List of boarding strategies to be executed
-     * @param guiFactory If empty, the simulation is run with no visuals
      */
-    public Simulation(int rows, int cols, List<Strategy> strategies, Optional<AbstractGuiFactory> guiFactory) {
-        Context context = Dispatcher.before("Simulation.constructor", rows, cols, strategies, guiFactory);
+    public Simulation(int rows, int cols, List<Strategy> strategies) {
+        Context context = Dispatcher.before("Simulation.constructor", rows, cols, strategies);
         this.rows = rows;
         this.cols = cols;
         this.strategies = strategies;
         aisle = new Person[rows];
-        // TODO
-        AbstractGuiFactory factory = guiFactory.get();
-        this.personGui = factory.createPersonGui();
-        this.aisleGui = factory.createAisleGui();
-        this.seatGui = factory.createSeatGui();
+        Dispatcher.after(context, null);
+    }
+
+    public Simulation(int rows, int cols, List<Strategy> strategies, AbstractGuiFactory guiFactory) {
+        this(rows, cols, strategies);
+        Context context = Dispatcher.before("Simulation.guiConstructor", guiFactory);
+        this.personGui = guiFactory.createPersonGui(cols);
+        this.aisleGui = guiFactory.createAisleGui(rows, cols);
+        this.seatGui = guiFactory.createSeatGui(cols);
         Dispatcher.after(context, null);
     }
 
@@ -88,7 +91,6 @@ public class Simulation {
                 Person p = cage.removeFirst();
                 p.setX(0);
                 aisle[0] = p;
-                // TODO don't move him on
             }
 
             for (int i = aisle.length - 1; i >= 0; i--) {
@@ -97,15 +99,7 @@ public class Simulation {
                 }
                 Person p = aisle[i];
                 if (isPassengerAtSeat(p)) {
-                    if (isPassengerReadyToSitDown(p)) {
-                        aisle[i] = null;
-                        filledSeats.add(p.getSeat());
-                        p.setSeated(true);
-                    } else if (p.isStowingBags()) {
-                        p.decrementCounter();
-                    } else {
-                        p.startStowingBags();
-                    }
+                    handlePersonAtSeat(p);
                 } else {
                     movePerson(p, p.getX() + 1);
                 }
@@ -117,9 +111,23 @@ public class Simulation {
         return tick;
     }
 
+    private void handlePersonAtSeat(Person p) {
+        if (isPassengerReadyToSitDown(p)) {
+            int index = p.getX();
+            aisle[index] = null;
+            filledSeats.add(p.getSeat());
+            p.setSeated(true);
+        } else if (p.isStowingBags()) {
+            p.decrementCounter();
+        } else {
+            p.startStowingBags();
+        }
+    }
+
     private void paintGui() {
         Context context = Dispatcher.before("Simulation.paintGui");
-        aisleGui.paint(this.rows);
+        if (personGui == null) throw new IllegalArgumentException("Cannot call paintGui when GUI objects are null");
+        aisleGui.paint();
         for (Person p : aisle) {
             if (p == null) continue;
             personGui.paint(p);
