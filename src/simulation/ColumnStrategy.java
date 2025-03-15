@@ -1,4 +1,5 @@
 package simulation;
+
 import java.util.*;
 import java.util.Comparator;
 
@@ -9,4 +10,7 @@ public class ColumnStrategy implements Strategy {
                 .thenComparingInt(p -> p.getSeat().row()).reversed());
     }
 
+    public String toString() {
+        return "ColumnStrategy";
+    }
 }

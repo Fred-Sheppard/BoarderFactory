@@ -8,4 +8,8 @@ public class FrontToBackStrategy implements Strategy {
     public void sortPassengers(ArrayList<Person> passengers) {
         passengers.sort(Comparator.comparingInt((Person p)-> p.getSeat().row()));
     }
+
+    public String toString() {
+        return "FrontToBackStrategy";
+    }
 }
