@@ -1,6 +1,7 @@
 # Boarder Factory
 
-![Airplane Boarding Simulation](images/random-sim.png)
+<img width="528" alt="SCR-20250315-tpbh" src="https://github.com/user-attachments/assets/b6b17971-5027-49af-8ed7-5557aed8e9c4" />
+
 
 ![Airplane Boarding Simulation Results](images/random-results.png)
 
