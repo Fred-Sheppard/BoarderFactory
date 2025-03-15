@@ -1,17 +1,18 @@
 import simulation.*;
 import interceptor.Dispatcher;
 import interceptor.LoggingInterceptor;
+import ui.TerminalController;
 
 import java.util.Optional;
 import java.util.Scanner;
 
-record  UserInput(
+record UserInput(
         int rows,
         int cols,
         boolean showVisuals,
         boolean forLegacyTerminal,
         Optional<Strategy> strategy) {
-};
+}
 
 public class Main {
     public static void main(String[] args) {
@@ -43,33 +44,41 @@ public class Main {
 
         Simulation simulation = builder.build();
         SimulationResults results = simulation.run();
-        System.out.println("\033c");
+        TerminalController.clearScreen();
         System.out.println(results.toString());
     }
 
     static UserInput collectOptions() {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Enter number of rows on the plane: ");
-//        int rows = scanner.nextInt();
-//        System.out.print("Enter number of seats in each row: ");
-//        int cols = scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);
 
-//        int stratId = scanner.nextInt();
-        int rows = 30;
-        int cols = 6;
-        int stratId = 3;
+        System.out.print("Enter number of rows on the plane: ");
+        int rows = scanner.nextInt();
 
-        Optional<Strategy> strategy = Optional.empty();
-        if (stratId < 4) {
-            strategy = Optional.of(switch (stratId) {
-                case 0 -> new FrontToBackStrategy();
-                case 1 -> new BackToFrontStrategy();
-                case 2 -> new RandomStrategy();
-                case 3 -> new ColumnStrategy();
-                default -> throw new IllegalStateException("Unexpected value: " + stratId);
-            });
+        System.out.print("Enter number of seats in each row: ");
+        int cols = scanner.nextInt();
+
+        Strategy[] strategies = {new FrontToBackStrategy(), new BackToFrontStrategy(), new RandomStrategy(), new ColumnStrategy()};
+        System.out.println("Select a strategy:");
+        for (int i = 0; i < strategies.length; i++) {
+            System.out.printf("%d. %s%n", i, strategies[i]);
         }
-        // TODO
-        return new UserInput(rows, cols, true, false, strategy);
+        int stratId = scanner.nextInt();
+        Optional<Strategy> strategy;
+        if (stratId <= 4) {
+            strategy = Optional.of(strategies[stratId]);
+        } else {
+            throw new IllegalArgumentException("Strategy %d is not a strategy".formatted(stratId));
+        }
+
+        System.out.print("Should a GUI be used? Y/N: ");
+        boolean showVisuals = scanner.next().equalsIgnoreCase("y");
+
+        boolean forLegacyTerminal = false;
+        if (showVisuals) {
+            System.out.print("Does your terminal support colour? Y/N: ");
+            forLegacyTerminal = !scanner.next().equalsIgnoreCase("y");
+        }
+
+        return new UserInput(rows, cols, showVisuals, forLegacyTerminal, strategy);
     }
 }
