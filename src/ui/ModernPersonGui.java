@@ -21,13 +21,7 @@ public class ModernPersonGui implements PersonGui {
         int x = passenger.getX() + xOffset;
         TerminalController.moveCursor(x, aisleY);
 
-        // TODO more than 3 columns
-        String color = switch (passenger.getSeat().col()) {
-            case 0, 5 -> LIGHT_BLUE;
-            case 1, 4 -> LIGHT_GREEN;
-            case 2, 3 -> LIGHT_RED;
-            default -> throw new IllegalStateException("Unexpected value: " + passenger.getSeat().col());
-        };
+        String color = getColorForSeat(passenger.getSeat(), seatsPerRow);
         String icon = passenger.isStowingBags() ? passenger.getCounter() + "" : "■";
         TerminalController.print(color, icon);
     }

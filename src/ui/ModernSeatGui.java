@@ -27,13 +27,7 @@ public class ModernSeatGui implements SeatGui {
         }
         moveCursor(x, y);
 
-        // TODO
-        String color = switch (seat.col()) {
-            case 0, 5 -> LIGHT_BLUE;
-            case 1, 4 -> LIGHT_GREEN;
-            case 2, 3 -> LIGHT_RED;
-            default -> throw new IllegalStateException("Unexpected value: " + seat.col());
-        };
+        String color = getColorForSeat(seat, seatsPerColumn);
         print(color, isOccupied ? "■" : "□");
     }
 
