@@ -71,11 +71,8 @@ public class TuiSimulationBuilder {
                 )
                 : Collections.singletonList(strategy);
 
-        return new Simulation(
-                rows,
-                cols,
-                strategies,
-                guiFactory
-        );
+        return guiFactory == null
+                ? new Simulation(rows, cols, strategies)
+                : new Simulation(rows, cols, strategies, guiFactory);
     }
 }
