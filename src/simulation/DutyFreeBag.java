@@ -11,8 +11,4 @@ class DutyFreeBag extends PersonDecorator {
     public int getTime() {
         return super.getTime() + DUTY_FREE_BAG;
     }
-
-    public int getDefaultCounter() {
-        return DUTY_FREE_BAG + person.getDefaultCounter();
-    }
 }

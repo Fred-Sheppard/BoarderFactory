@@ -11,8 +11,4 @@ class OverHeadBag extends PersonDecorator {
     public int getTime() {
         return super.getTime() + OVER_HEAD_BAG;
     }
-
-    public int getDefaultCounter() {
-        return OVER_HEAD_BAG + person.getDefaultCounter();
-    }
 }

@@ -21,7 +21,7 @@ abstract class PersonDecorator implements Person {
     @Override
     public void startStowingBags() {
         if (person.getCounter() == 0) {
-            person.setCounter(this.getDefaultCounter());
+            person.setCounter(this.getTime());
         }
         person.startStowingBags();
     }

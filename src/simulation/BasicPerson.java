@@ -14,7 +14,6 @@ class BasicPerson implements Person {
         this.x = 0;
         this.time = time;
         this.seat = seat;
-        this.counter = 0;
     }
 
     public BasicPerson(Seat seat) {
@@ -64,10 +63,6 @@ class BasicPerson implements Person {
     @Override
     public int getCounter() {
         return counter;
-    }
-
-    public int getDefaultCounter() {
-        return DEFAULT_TIME;
     }
 
     public void setCounter(int counter) {
