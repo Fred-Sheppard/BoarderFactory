@@ -2,22 +2,24 @@ package ui;
 
 import simulation.Person;
 
-import static ui.Util.*;
+import static ui.TerminalController.*;
 
 public class ModernPersonGui implements PersonGui {
     private final int xOffset;
     private final int aisleY;
+    private final int seatsPerRow;
 
-    public ModernPersonGui(int xOffset, int yOffset, int cols) {
+
+    public ModernPersonGui(int xOffset, int yOffset, int seatsPerRow) {
         this.xOffset = xOffset;
-        aisleY = cols / 2 + yOffset;
+        aisleY = seatsPerRow / 2 + yOffset;
+        this.seatsPerRow = seatsPerRow;
     }
 
     @Override
     public void paint(Person passenger) {
-        // TODO spacing
         int x = passenger.getX() + xOffset;
-        Util.moveCursor(x, aisleY);
+        TerminalController.moveCursor(x, aisleY);
 
         // TODO more than 3 columns
         String color = switch (passenger.getSeat().col()) {
@@ -27,6 +29,6 @@ public class ModernPersonGui implements PersonGui {
             default -> throw new IllegalStateException("Unexpected value: " + passenger.getSeat().col());
         };
         String icon = passenger.isStowingBags() ? passenger.getCounter() + "" : "■";
-        Util.print(color, icon);
+        TerminalController.print(color, icon);
     }
 }

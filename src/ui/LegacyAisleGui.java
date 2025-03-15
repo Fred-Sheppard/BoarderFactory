@@ -13,11 +13,11 @@ public class LegacyAisleGui implements AisleGui {
 
     @Override
     public void paint() {
-        Util.clearScreen();
+        TerminalController.clearScreen();
         for (int row = 0; row < rows; row++) {
             int x = row + xOffset;
-            Util.moveCursor(x, aisleY);
-            Util.print("=");
+            TerminalController.moveCursor(x, aisleY);
+            TerminalController.print("=");
         }
     }
 }

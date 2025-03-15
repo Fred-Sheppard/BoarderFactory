@@ -2,7 +2,7 @@ package ui;
 
 import simulation.Seat;
 
-import static ui.Util.*;
+import static ui.TerminalController.*;
 
 public class LegacySeatGui implements SeatGui {
     private final int xOffset;

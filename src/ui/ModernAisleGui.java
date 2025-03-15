@@ -1,6 +1,6 @@
 package ui;
 
-import static ui.Util.WHITE;
+import static ui.TerminalController.WHITE;
 
 public class ModernAisleGui implements AisleGui {
     private static final String AISLE_COLOR = WHITE;
@@ -16,11 +16,11 @@ public class ModernAisleGui implements AisleGui {
 
     @Override
     public void paint() {
-        Util.clearScreen();
+        TerminalController.clearScreen();
         for (int row = 0; row < rows; row++) {
             int x = row + xOffset;
-            Util.moveCursor(x, aisleY);
-            Util.print(AISLE_COLOR, "=");
+            TerminalController.moveCursor(x, aisleY);
+            TerminalController.print(AISLE_COLOR, "=");
         }
     }
 }

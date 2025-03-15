@@ -2,7 +2,7 @@ package ui;
 
 import simulation.Person;
 
-import static ui.Util.*;
+import static ui.TerminalController.*;
 
 public class LegacyPersonGui implements PersonGui {
     private final int xOffset;

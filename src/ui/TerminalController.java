@@ -1,6 +1,8 @@
 package ui;
 
-public class Util {
+import simulation.Seat;
+
+public class TerminalController {
     public static final String WHITE = "\u001B[37m";   // Window seat color
     public static final String LIGHT_BLUE = "\u001B[94m";   // Window seat color
     public static final String LIGHT_GREEN = "\u001B[92m";  // Middle seat color
@@ -21,5 +23,22 @@ public class Util {
 
     public static void print(String text) {
         System.out.print(RESET + text);
+    }
+
+    public static String getColorForSeat(Seat seat, int seatsPerColumn) {
+        int colorIndex;
+        if (seat.col() < seatsPerColumn / 2) {
+            colorIndex = seat.col();
+        } else {
+            // Reverse the modulo
+            colorIndex = seatsPerColumn - (seat.col() % seatsPerColumn) - 1;
+        }
+
+        return switch (colorIndex % 3) {
+            case 0 -> LIGHT_BLUE;
+            case 1 -> LIGHT_GREEN;
+            case 2 -> LIGHT_RED;
+            default -> throw new IllegalStateException("Unexpected value: " + colorIndex);
+        };
     }
 }
