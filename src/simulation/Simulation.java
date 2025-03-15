@@ -104,7 +104,9 @@ public class Simulation {
                     movePerson(p, p.getX() + 1);
                 }
             }
-            paintGui();
+            if (isGuiEnabled()) {
+                paintGui();
+            }
             tick++;
         }
         Dispatcher.after(context, tick);
@@ -126,7 +128,7 @@ public class Simulation {
 
     private void paintGui() {
         Context context = Dispatcher.before("Simulation.paintGui");
-        if (personGui == null) throw new IllegalArgumentException("Cannot call paintGui when GUI objects are null");
+        if (!isGuiEnabled()) throw new IllegalArgumentException("Cannot call paintGui when GUI objects are null");
         aisleGui.paint();
         for (Person p : aisle) {
             if (p == null) continue;
@@ -162,6 +164,10 @@ public class Simulation {
         boolean result = p.isStowingBags() && p.getCounter() == 0;
         Dispatcher.after(context, result);
         return result;
+    }
+
+    private boolean isGuiEnabled() {
+        return seatGui != null && aisleGui != null && personGui != null;
     }
 
     public SimulationResults run() {
