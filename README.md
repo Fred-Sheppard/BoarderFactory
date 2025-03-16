@@ -3,7 +3,25 @@
 <img width="528" alt="SCR-20250315-tpbh" src="https://github.com/user-attachments/assets/b6b17971-5027-49af-8ed7-5557aed8e9c4" />
 
 
-![Airplane Boarding Simulation Results](images/random-results.png)
+```
+=== Boarding Simulation Results ===
+
+Strategy: BackToFrontStrategy
+Time taken: 990 ticks
+Real-time estimate: 16 minutes 30 seconds
+
+Strategy: RandomStrategy
+Time taken: 448 ticks
+Real-time estimate: 7 minutes 28 seconds
+
+Strategy: FrontToBackStrategy
+Time taken: 1137 ticks
+Real-time estimate: 18 minutes 57 seconds
+
+Strategy: ColumnStrategy
+Time taken: 222 ticks
+Real-time estimate: 3 minutes 42 seconds
+```
 
 A sophisticated airplane boarding simulator that implements and compares different boarding strategies to optimize passenger loading time.
 
