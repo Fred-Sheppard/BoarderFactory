@@ -85,11 +85,6 @@ The test suite includes:
   - Baggage: Tests person-baggage interactions
   - Seat: Tests seat assignments and comparisons
 
-- **Integration Tests**:
-  - Complete simulation flow
-  - Person-baggage interactions
-  - Strategy execution and timing
-
 Test results will show:
 - Number of tests run
 - Test success/failure status
