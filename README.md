@@ -66,7 +66,6 @@ BoarderFactory/
 ├── src/
 │   └── test/
 │       ├── unit/          # Unit tests for individual components
-│       └── integration/   # Integration tests for system flow
 ```
 
 ### Running the Test Suite
@@ -100,5 +99,4 @@ BoarderFactory/
 │   ├── ui/            # Visualization components
 │   ├── interceptor/   # Logging system
 │   └── Main.java      # Entry point
-└── docs/              # Documentation and images
 ```
