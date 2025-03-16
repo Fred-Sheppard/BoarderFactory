@@ -59,16 +59,18 @@ public class Main {
 
         Strategy[] strategies = {new FrontToBackStrategy(), new BackToFrontStrategy(), new RandomStrategy(), new ColumnStrategy()};
         System.out.println("Select a strategy:");
-        for (int i = 0; i < strategies.length; i++) {
+        int i = 0;
+        while (i < strategies.length) {
             System.out.printf("%d. %s%n", i, strategies[i]);
+            i++;
         }
+        System.out.printf("%d. All%n", i);
         int stratId = scanner.nextInt();
-        Optional<Strategy> strategy;
-        if (stratId <= 4) {
+        Optional<Strategy> strategy = Optional.empty();
+        if (stratId < 4) {
             strategy = Optional.of(strategies[stratId]);
-        } else {
-            throw new IllegalArgumentException("Strategy %d is not a strategy".formatted(stratId));
         }
+        // Otherwise, run all strategies
 
         System.out.print("Should a GUI be used? Y/N: ");
         boolean showVisuals = scanner.next().equalsIgnoreCase("y");

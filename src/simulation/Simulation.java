@@ -47,6 +47,9 @@ public class Simulation {
 
     private void setup(Strategy strategy) {
         Context context = Dispatcher.before("Simulation.setup", strategy);
+        cage.clear();
+        filledSeats.clear();
+        Arrays.fill(aisle, null);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 Seat seat = new Seat(i, j);
