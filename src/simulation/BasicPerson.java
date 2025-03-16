@@ -1,7 +1,7 @@
 package simulation;
 
 // Concrete implementation of Person
-class BasicPerson implements Person {
+public class BasicPerson implements Person {
     private static final int DEFAULT_TIME = 1; // Default processing time for a person
     private final int time;
     private boolean stowingBags = false;

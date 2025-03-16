@@ -1,7 +1,7 @@
 package simulation;
 
 // Concrete Decorator for Overhead Bag
-class OverHeadBag extends PersonDecorator {
+public class OverHeadBag extends PersonDecorator {
     final static private int OVER_HEAD_BAG = 3;
     public OverHeadBag(Person person) {
         super(person);

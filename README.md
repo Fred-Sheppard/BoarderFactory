@@ -57,6 +57,45 @@ java src/Main.java 2> output.log
 
 The simulation will display a visual representation of the boarding process and output timing results for each strategy.
 
+## Running Tests
+
+The project includes a comprehensive test suite with both unit and integration tests. Tests are organized in the following structure:
+
+```
+BoarderFactory/
+├── src/
+│   └── test/
+│       ├── unit/          # Unit tests for individual components
+│       └── integration/   # Integration tests for system flow
+```
+
+### Running the Test Suite
+
+1. Make sure you have JUnit dependencies in the `lib` directory
+2. Run all tests using the provided script:
+```bash
+./run_tests.sh
+```
+
+The test suite includes:
+- **Unit Tests**:
+  - BasicPerson: Tests counter functionality and basic operations
+  - Strategy: Tests different boarding strategies
+  - Simulation: Tests initialization and configuration
+  - Baggage: Tests person-baggage interactions
+  - Seat: Tests seat assignments and comparisons
+
+- **Integration Tests**:
+  - Complete simulation flow
+  - Person-baggage interactions
+  - Strategy execution and timing
+
+Test results will show:
+- Number of tests run
+- Test success/failure status
+- Detailed error messages if any tests fail
+- Total execution time
+
 ## Project Structure
 
 ```

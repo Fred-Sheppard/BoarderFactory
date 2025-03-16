@@ -1,7 +1,7 @@
 package simulation;
 
 // Concrete Decorator for Under Bag
-class UnderBag extends PersonDecorator {
+public class UnderBag extends PersonDecorator {
     final static private int UNDER_BAG_TIME = 2;
 
     public UnderBag(Person person) {
