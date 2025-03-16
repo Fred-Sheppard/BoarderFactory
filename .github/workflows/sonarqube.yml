@@ -6,8 +6,24 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '23'
+          distribution: 'temurin'
+      - name: Compile and Run Tests
+        run: |
+          mkdir -p out
+          javac -d out -cp "lib/*:src" src/simulation/*.java src/test/unit/*.java
+          java -jar lib/junit-platform-console-standalone-1.10.0.jar --class-path out --select-package unit
   sonarqube:
     name: SonarQube
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,12 +36,12 @@ jobs:
           distribution: 'temurin'
       - name: Compile Java files
         run: |
-          mkdir -p build/classes
-          javac -d build/classes $(find src -name "*.java")
+          mkdir -p out
+          javac -d out -cp "lib/*:src" src/simulation/*.java src/test/unit/*.java
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.java.binaries=build/classes
+            -Dsonar.java.binaries=out
