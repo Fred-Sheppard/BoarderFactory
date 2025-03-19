@@ -1,8 +1,8 @@
 import simulation.*;
 import simulation.strategy.*;
 import ui.AbstractGuiFactory;
-import ui.LegacyGuiFactory;
-import ui.ModernGuiFactory;
+import ui.legacy.LegacyGuiFactory;
+import ui.modern.ModernGuiFactory;
 
 import java.util.*;
 

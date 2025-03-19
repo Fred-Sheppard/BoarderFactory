@@ -1,11 +1,17 @@
-package ui;
+package ui.modern;
 
-public class LegacyAisleGui implements AisleGui {
+import ui.AisleGui;
+import ui.TerminalController;
+
+import static ui.TerminalController.WHITE;
+
+public class ModernAisleGui implements AisleGui {
+    private static final String AISLE_COLOR = WHITE;
     private final int xOffset;
     private final int aisleY;
     private final int rows;
 
-    public LegacyAisleGui(int rows, int cols, int xOffset, int yOffset) {
+    public ModernAisleGui(int rows, int cols, int xOffset, int yOffset) {
         this.rows = rows;
         this.xOffset = xOffset;
         this.aisleY = cols / 2 + yOffset;
@@ -17,7 +23,7 @@ public class LegacyAisleGui implements AisleGui {
         for (int row = 0; row < rows; row++) {
             int x = row + xOffset;
             TerminalController.moveCursor(x, aisleY);
-            TerminalController.print("=");
+            TerminalController.print(AISLE_COLOR, "=");
         }
     }
 }

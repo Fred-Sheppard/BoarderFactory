@@ -1,6 +1,11 @@
-package ui;
+package ui.legacy;
 
-public class ModernGuiFactory implements AbstractGuiFactory {
+import ui.AbstractGuiFactory;
+import ui.AisleGui;
+import ui.PersonGui;
+import ui.SeatGui;
+
+public class LegacyGuiFactory implements AbstractGuiFactory {
     /**
      * How far from the left the plane should be drawn
      */
@@ -12,14 +17,15 @@ public class ModernGuiFactory implements AbstractGuiFactory {
 
     @Override
     public PersonGui createPersonGui(int cols) {
-        return new ModernPersonGui(X_OFFSET, Y_OFFSET, cols);
+        return new LegacyPersonGui(X_OFFSET, Y_OFFSET, cols);
     }
 
     public AisleGui createAisleGui(int rows, int columns) {
-        return new ModernAisleGui(rows, columns, X_OFFSET, Y_OFFSET);
+        return new LegacyAisleGui(rows, columns, X_OFFSET, Y_OFFSET);
     }
 
     public SeatGui createSeatGui(int seatsPerColumn) {
-        return new ModernSeatGui(X_OFFSET, Y_OFFSET, seatsPerColumn);
+        return new LegacySeatGui(X_OFFSET, Y_OFFSET, seatsPerColumn);
     }
+
 }

@@ -1,6 +1,7 @@
-package ui;
+package ui.legacy;
 
 import simulation.passenger.Person;
+import ui.PersonGui;
 
 import static ui.TerminalController.*;
 

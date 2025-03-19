@@ -1,19 +1,20 @@
-package ui;
+package ui.legacy;
 
 import simulation.Seat;
+import ui.SeatGui;
 
 import static ui.TerminalController.*;
 
-public class ModernSeatGui implements SeatGui {
+public class LegacySeatGui implements SeatGui {
     private final int xOffset;
     private final int yOffset;
-    private final int seatsPerColumn;
+    private final int aisleY;
 
 
-    public ModernSeatGui(int xOffset, int yOffset, int seatsPerColumn) {
+    public LegacySeatGui(int xOffset, int yOffset, int seatsPerColumn) {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
-        this.seatsPerColumn = seatsPerColumn;
+        this.aisleY = seatsPerColumn / 2 + yOffset;
     }
 
     private void paint(Seat seat, boolean isOccupied) {
@@ -21,16 +22,13 @@ public class ModernSeatGui implements SeatGui {
         int y = seat.col() + yOffset;
 
         // Add a gap in the middle for the aisle
-        int aisleY = seatsPerColumn / 2 + yOffset;
         if (y >= aisleY) {
             y += 1;
         }
+
         moveCursor(x, y);
-
-        String color = getColorForSeat(seat, seatsPerColumn);
-        print(color, isOccupied ? "■" : "□");
+        print(isOccupied ? "■" : "□");
     }
-
 
     @Override
     public void paintFull(Seat seat, int seatsPerRow) {
