@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import simulation.*;
+import simulation.strategy.BackToFrontStrategy;
+import simulation.strategy.FrontToBackStrategy;
+import simulation.strategy.RandomStrategy;
+import simulation.strategy.Strategy;
 
 import java.util.ArrayList;
 import java.util.List;

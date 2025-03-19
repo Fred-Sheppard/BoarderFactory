@@ -1,5 +1,7 @@
 package simulation;
 
+import simulation.strategy.Strategy;
+
 import java.util.HashMap;
 import java.util.Map;
 

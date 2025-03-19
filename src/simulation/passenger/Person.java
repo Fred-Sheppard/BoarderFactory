@@ -1,4 +1,6 @@
-package simulation;
+package simulation.passenger;
+
+import simulation.Seat;
 
 // Base interface
 public interface Person {

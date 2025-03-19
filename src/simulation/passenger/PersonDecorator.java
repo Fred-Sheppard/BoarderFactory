@@ -1,4 +1,6 @@
-package simulation;
+package simulation.passenger;
+
+import simulation.Seat;
 
 // Decorator class
 abstract class PersonDecorator implements Person {

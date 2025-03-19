@@ -1,4 +1,4 @@
-package simulation;
+package simulation.passenger;
 
 // Concrete Decorator for Duty Free Bag
 public class DutyFreeBag extends PersonDecorator {

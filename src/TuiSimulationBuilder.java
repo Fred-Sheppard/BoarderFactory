@@ -1,4 +1,5 @@
 import simulation.*;
+import simulation.strategy.*;
 import ui.AbstractGuiFactory;
 import ui.LegacyGuiFactory;
 import ui.ModernGuiFactory;

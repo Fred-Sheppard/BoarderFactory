@@ -1,4 +1,6 @@
-package simulation;
+package simulation.strategy;
+import simulation.passenger.Person;
+
 import java.util.*;
 import java.util.Comparator;
 

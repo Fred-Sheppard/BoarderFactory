@@ -1,4 +1,4 @@
-package simulation;
+package simulation.passenger;
 
 // Concrete Decorator for Overhead Bag
 public class OverHeadBag extends PersonDecorator {

@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import simulation.*;
+import simulation.passenger.BasicPerson;
+import simulation.passenger.Person;
+import simulation.strategy.*;
 
 import java.util.ArrayList;
 
@@ -62,13 +65,6 @@ class StrategyTest {
                 "All passengers should still be present after shuffling");
         assertTrue(passengers.containsAll(originalOrder),
                 "All original passengers should be present after shuffling");
-    }
-
-    @Test
-    void testColumnStrategy() {
-        Strategy strategy = new ColumnStrategy();
-        strategy.sortPassengers(passengers);
-       assertTrue(true); // once column is done we will finish this test
     }
 
     @Test

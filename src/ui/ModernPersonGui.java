@@ -1,6 +1,6 @@
 package ui;
 
-import simulation.Person;
+import simulation.passenger.Person;
 
 import static ui.TerminalController.*;
 

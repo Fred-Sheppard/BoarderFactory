@@ -1,4 +1,6 @@
-package simulation;
+package simulation.passenger;
+
+import simulation.Seat;
 
 // Concrete implementation of Person
 public class BasicPerson implements Person {

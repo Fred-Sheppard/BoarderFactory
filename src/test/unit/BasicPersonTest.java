@@ -3,7 +3,7 @@ package unit;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import simulation.BasicPerson;
+import simulation.passenger.BasicPerson;
 import simulation.Seat;
 
 class BasicPersonTest {

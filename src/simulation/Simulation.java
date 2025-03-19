@@ -1,5 +1,7 @@
 package simulation;
 
+import simulation.passenger.*;
+import simulation.strategy.Strategy;
 import ui.AbstractGuiFactory;
 import ui.AisleGui;
 import ui.PersonGui;
